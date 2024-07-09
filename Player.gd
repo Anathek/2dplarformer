@@ -4,8 +4,10 @@ var move_speed : float = 100.0
 var jump_force : float = 200.0
 var gravity : float = 500.0
 
-var score : int = 0
 @onready var score_text : Label = get_node("CanvasLayer/Label")
+
+func _ready():
+	score_text.text = str("Score: ", Points.points)
 
 func _physics_process(delta):
 	if not is_on_floor():
@@ -27,10 +29,12 @@ func _physics_process(delta):
 		game_over()
 	
 func game_over():
+	Points.points = 0
 	get_tree().reload_current_scene()
 	
 func add_score(amount):
-	score += amount
+	Points.points += amount
+	var score = Points.points
 	score_text.text = str("Score: ", score)
 	
 
